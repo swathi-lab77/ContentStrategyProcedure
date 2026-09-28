@@ -1,4 +1,4 @@
-## 🧠 Content Strategy Agent
+##  Content Strategy Agent
 
 ### HackwithHyderabad 3.0
 
@@ -91,11 +91,11 @@ The demo focuses on **content performance, audience preferences, successful topi
 
 ### Key Features
 
-* 🧠 Persistent long-term memory
-* 📊 Content performance analysis
-* 🎯 Audience-based recommendations
-* 💡 Content gap identification
-* ✍️ AI-powered content strategy
-* 🔄 Learning from previous content
+*  Persistent long-term memory
+*  Content performance analysis
+*  Audience-based recommendations
+*  Content gap identification
+*  AI-powered content strategy
+*  Learning from previous content
 * 📈 Performance-based recommendations
 * 🗂️ Historical content and memory retrieval
