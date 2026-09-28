@@ -97,5 +97,5 @@ The demo focuses on **content performance, audience preferences, successful topi
 *  Content gap identification
 *  AI-powered content strategy
 *  Learning from previous content
-* 📈 Performance-based recommendations
-* 🗂️ Historical content and memory retrieval
+*  Performance-based recommendations
+*  Historical content and memory retrieval
