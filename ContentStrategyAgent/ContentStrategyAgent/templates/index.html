@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Content Strategy Agent</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .result {
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .saved-item {
+            background: #f8f9fa;
+            padding: 18px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #4a6cf7;
+        }
+
+        .saved-item h3 {
+            margin-top: 0;
+        }
+
+        .memory-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .success {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .error {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>🚀 AI Content Strategy Agent</h1>
+
+
+    <!-- =============================== -->
+    <!-- GENERATE STRATEGY -->
+    <!-- =============================== -->
+
+    <div class="card">
+
+        <h2>🤖 Generate Content Strategy</h2>
+
+        <label>Company</label>
+
+        <input
+            id="company"
+            type="text"
+            placeholder="Example: Nike"
+        >
+
+
+        <label>Industry</label>
+
+        <input
+            id="industry"
+            type="text"
+            placeholder="Example: Sports and Fitness"
+        >
+
+
+        <label>Target Audience</label>
+
+        <input
+            id="audience"
+            type="text"
+            placeholder="Example: College students and young athletes"
+        >
+
+
+        <label>Brand Tone</label>
+
+        <input
+            id="tone"
+            type="text"
+            placeholder="Example: Energetic, motivational and friendly"
+        >
+
+
+        <label>Marketing Goal</label>
+
+        <input
+            id="goal"
+            type="text"
+            placeholder="Example: Increase social media engagement"
+        >
+
+
+        <button onclick="generateStrategy()">
+            Generate Strategy
+        </button>
+
+    </div>
+
+
+
+    <!-- =============================== -->
+    <!-- ADD PUBLISHED CONTENT -->
+    <!-- =============================== -->
+
+    <div class="card">
+
+        <h2>📝 Add Published Content</h2>
+
+        <p>
+            Save previous content and its performance.
+            Hindsight will remember this information.
+        </p>
+
+
+        <label>Content Title</label>
+
+        <input
+            id="contentTitle"
+            type="text"
+            placeholder="Example: Summer Running Challenge"
+        >
+
+
+        <label>Topic</label>
+
+        <input
+            id="contentTopic"
+            type="text"
+            placeholder="Example: Running and Fitness"
+        >
+
+
+        <label>Content Type</label>
+
+        <input
+            id="contentType"
+            type="text"
+            placeholder="Example: Instagram Reels"
+        >
+
+
+        <label>Performance</label>
+
+        <input
+            id="performance"
+            type="text"
+            placeholder="Example: 50000 views, 4200 likes, 350 comments, 250 shares"
+        >
+
+
+        <button onclick="addContent()">
+            💾 Save Content to Hindsight
+        </button>
+
+
+        <div
+            id="contentMessage"
+            class="success">
+        </div>
+
+    </div>
+
+
+
+    <!-- =============================== -->
+    <!-- SAVED CONTENT -->
+    <!-- =============================== -->
+
+    <div class="card">
+
+        <h2>📊 Saved Content</h2>
+
+        <p>
+            All previously saved content and performance data.
+        </p>
+
+
+        <button onclick="loadSavedContent()">
+            🔄 Refresh Saved Content
+        </button>
+
+
+        <div id="savedContent">
+
+            Loading saved content...
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =============================== -->
+    <!-- AI STRATEGY -->
+    <!-- =============================== -->
+
+    <div class="card">
+
+        <h2>💡 AI Strategy</h2>
+
+
+        <div
+            id="strategy"
+            class="result">
+
+            Generate a strategy to see the result.
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =============================== -->
+    <!-- HINDSIGHT MEMORY -->
+    <!-- =============================== -->
+
+    <div class="card">
+
+        <h2>🧠 Hindsight Memory</h2>
+
+        <p>
+            The agent remembers previous content,
+            performance, preferences and strategy decisions.
+        </p>
+
+
+        <div
+            id="memory"
+            class="memory-box">
+
+            No memory loaded yet.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+// ======================================================
+// ADD CONTENT
+// ======================================================
+
+async function addContent() {
+
+    const title =
+        document.getElementById("contentTitle").value;
+
+    const topic =
+        document.getElementById("contentTopic").value;
+
+    const contentType =
+        document.getElementById("contentType").value;
+
+    const performance =
+        document.getElementById("performance").value;
+
+
+    if (!title || !topic || !contentType || !performance) {
+
+        document.getElementById("contentMessage").innerText =
+            "❌ Please fill all fields.";
+
+        return;
+    }
+
+
+    document.getElementById("contentMessage").innerText =
+        "⏳ Saving content...";
+
+
+    try {
+
+        const response = await fetch(
+            "/api/add-content",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    title: title,
+
+                    topic: topic,
+
+                    content_type: contentType,
+
+                    performance: performance
+
+                })
+            }
+        );
+
+
+        const result = await response.json();
+
+
+        if (result.success) {
+
+            document.getElementById("contentMessage").innerText =
+                "✅ Content saved successfully!";
+
+
+            // Clear fields
+
+            document.getElementById("contentTitle").value = "";
+
+            document.getElementById("contentTopic").value = "";
+
+            document.getElementById("contentType").value = "";
+
+            document.getElementById("performance").value = "";
+
+
+            // Refresh saved content
+
+            loadSavedContent();
+
+
+        } else {
+
+            document.getElementById("contentMessage").innerText =
+                "❌ Error: " + result.error;
+
+        }
+
+    }
+
+    catch (error) {
+
+        document.getElementById("contentMessage").innerText =
+            "❌ Server error: " + error;
+
+    }
+
+}
+
+
+
+// ======================================================
+// LOAD SAVED CONTENT
+// ======================================================
+
+async function loadSavedContent() {
+
+    const box =
+        document.getElementById("savedContent");
+
+
+    box.innerHTML =
+        "⏳ Loading saved content...";
+
+
+    try {
+
+        const response =
+            await fetch("/api/content");
+
+
+        const result =
+            await response.json();
+
+
+        if (!result.success) {
+
+            box.innerHTML =
+                "❌ Error: " + result.error;
+
+            return;
+        }
+
+
+        const contents =
+            result.content;
+
+
+        if (!contents || contents.length === 0) {
+
+            box.innerHTML =
+                "<p>No saved content yet.</p>";
+
+            return;
+        }
+
+
+        let html = "";
+
+
+        contents.forEach(function(item) {
+
+            html += `
+
+                <div class="saved-item">
+
+                    <h3>
+                        📝 ${escapeHtml(item[1])}
+                    </h3>
+
+                    <p>
+                        <b>Topic:</b>
+                        ${escapeHtml(item[2])}
+                    </p>
+
+                    <p>
+                        <b>Content Type:</b>
+                        ${escapeHtml(item[3])}
+                    </p>
+
+                    <p>
+                        <b>👁 Views:</b>
+                        ${item[4]}
+                    </p>
+
+                    <p>
+                        <b>❤️ Likes:</b>
+                        ${item[5]}
+                    </p>
+
+                    <p>
+                        <b>💬 Comments:</b>
+                        ${item[6]}
+                    </p>
+
+                    <p>
+                        <b>🔄 Shares:</b>
+                        ${item[7]}
+                    </p>
+
+                </div>
+
+            `;
+
+        });
+
+
+        box.innerHTML = html;
+
+    }
+
+    catch (error) {
+
+        box.innerHTML =
+            "❌ Could not load saved content: " + error;
+
+    }
+
+}
+
+
+
+// ======================================================
+// GENERATE STRATEGY
+// ======================================================
+
+async function generateStrategy() {
+
+
+    const company =
+        document.getElementById("company").value;
+
+    const industry =
+        document.getElementById("industry").value;
+
+    const audience =
+        document.getElementById("audience").value;
+
+    const tone =
+        document.getElementById("tone").value;
+
+    const goal =
+        document.getElementById("goal").value;
+
+
+    if (!company ||
+        !industry ||
+        !audience ||
+        !tone ||
+        !goal) {
+
+        document.getElementById("strategy").innerText =
+            "❌ Please fill all strategy fields.";
+
+        return;
+    }
+
+
+    document.getElementById("strategy").innerText =
+        "⏳ Generating AI strategy...";
+
+
+    document.getElementById("memory").innerText =
+        "⏳ Searching Hindsight memory...";
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                "/api/strategy",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        company: company,
+
+                        industry: industry,
+
+                        audience: audience,
+
+                        tone: tone,
+
+                        goal: goal
+
+                    })
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (result.success) {
+
+
+            document.getElementById("strategy").innerText =
+                result.strategy;
+
+
+            document.getElementById("memory").innerText =
+                result.memory || "No previous memory found.";
+
+
+        } else {
+
+
+            document.getElementById("strategy").innerText =
+                "❌ Error: " + result.error;
+
+
+            document.getElementById("memory").innerText =
+                "Could not retrieve memory.";
+
+        }
+
+    }
+
+    catch (error) {
+
+
+        document.getElementById("strategy").innerText =
+            "❌ Server error: " + error;
+
+
+        document.getElementById("memory").innerText =
+            "Could not connect to server.";
+
+    }
+
+}
+
+
+
+// ======================================================
+// SECURITY / DISPLAY HELPER
+// ======================================================
+
+function escapeHtml(text) {
+
+    if (text === null || text === undefined) {
+
+        return "";
+
+    }
+
+
+    return String(text)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+}
+
+
+
+// ======================================================
+// LOAD SAVED CONTENT WHEN PAGE OPENS
+// ======================================================
+
+loadSavedContent();
+
+
+</script>
+
+
+</body>
+
+</html>
